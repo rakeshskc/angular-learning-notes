@@ -1,0 +1,618 @@
+Data-binding − It is the automatic synchronization of data between model and view components.
+Scope − These are objects that refer to the model. They act as a glue between controller and view.
+Controller − These are JavaScript functions bound to a particular scope.
+Services − AngularJS comes with several built-in services such as $http to make a XMLHttpRequests. These are singleton objects which are instantiated only once in app.
+Filters − These select a subset of items from an array and returns a new array.
+Directives − Directives are markers on DOM elements such as elements, attributes, css, and more. These can be used to create custom HTML tags that serve as new, custom widgets. AngularJS has built-in directives such as ngBind, ngModel, etc.
+Templates − These are the rendered view with information from the controller and model. These can be a single file (such as index.html) or multiple views in one page using partials.
+Routing − It is concept of switching views.
+Model View Whatever − MVW is a design pattern for dividing an application into different parts called Model, View, and Controller, each with distinct responsibilities. AngularJS does not implement MVC in the traditional sense, but rather something closer to MVVM (Model-View-ViewModel). The Angular JS team refers it humorously as Model View Whatever.
+Deep Linking − Deep linking allows to encode the state of application in the URL so that it can be bookmarked. The application can then be restored from the URL to the same state.
+Dependency Injection − AngularJS has a built-in dependency injection subsystem that helps the developer to create, understand, and test the applications easily.
+
+
+
+
+
+AngularJS is an open-source web application framework. It was originally developed in 2009 by Misko Hevery and Adam Abrons. It is now maintained by Google. Its latest version is 
+AngularJS is a efficient framework that can create Rich Internet Applications (RIA).
+AngularJS provides developers an options to write client side applications using JavaScript in a clean Model View Controller (MVC) way.
+Applications written in AngularJS are cross-browser compliant. AngularJS automatically handles JavaScript code suitable for each browser.
+AngularJS is open source, completely free, and used by thousands of developers around the world. It is licensed under the Apache license version 2.0.
+Overall, AngularJS is a framework to build large scale, high-performance, and easyto-maintain web applications.
+
+
+
+
+
+AngularJS is a JavaScript framework for building MVC-based web applications. It allows you to split the business logic layer, data layer, and presentation layer. It uses HTML as a template language to extend its syntax for creating various application components. It also helps to reduce the code by data binding and dependency injection features.
+
+
+    
+    
+    
+
+
+3] To create new application
+ng new my-app
+
+
+
+
+2] Check version of angular
+ng --version
+
+
+1] To install Angular
+
+npm install -g @angular/cli@latest
+
+
+
+
+npm install --save myangularsbmapp@1.0.0
+
+
+
+
+
+
+
+
+
+//Literal Version
+
+
+		var emp1={
+			empId:101,
+			empName:"tanish",
+			salary:100000,
+			showEmployeeDetails:function(){
+				alert("EMployee details are "+this.empId+" "+this.empName+" "+this.salary);
+			}
+		}
+
+		emp1.showEmployeeDetails();
+        
+        
+        
+        
+        
+        
+        
+
+
+db.transaction(function(tx){
+     			// alert('Insert into employee values('+id+',"'+name+'",'+salary+")")
+				 tx.executeSql("select * from employee",[],function(tx,result){
+				 	var len=result.rows.length;
+
+				 	for(i=0;i<len;i++){
+				 		alert(result.rows.item(i).name);
+				 	}
+				 })
+			})
+
+    
+    
+    
+    
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		//Consructor version
+
+		function Employee(empId=0,empName="",salary=0){
+			this.empId=empId;
+			this.empName=empName;
+			this.salary=salary;
+			this.showEmployeeDetails=function(){
+				return ("<br>EMployee details are "+this.empId+" "+this.empName+" "+this.salary);
+			}
+		}
+
+		var db=openDatabase('myAngularDB','1.0','Description',2*1024*1024);
+		db.transaction(function(tx){
+			tx.executeSql('create table employee(id unique,name,salary)')
+		})
+
+     	var collection=new Array();
+
+
+     	function saveRecord(){
+
+     		var id=parseInt(document.getElementById('empid').value)
+     		var name=(document.getElementById('name').value)
+     		var salary=parseInt(document.getElementById('salary').value)
+
+     		collection.push(new Employee(id,name,salary))
+     		alert("Record inserted successfully....")
+     		db.transaction(function(tx){
+     			// alert('Insert into employee values('+id+',"'+name+'",'+salary+")")
+				 tx.executeSql('Insert into employee values('+id+',"'+name+'",'+salary+")")
+			})
+			alert("Record is also saved in websql")
+
+     	}
+
+     	function displayRecords(){
+     		var temp=""
+     		for (var i = 0; i < collection.length; i++) {
+     			temp+=collection[i].showEmployeeDetails();	
+     		}
+
+     		document.getElementById('d1').innerHTML=temp;
+     	}
+
+
+     	
+
+dfgghudfgghu	</script>
+</head>
+<body>
+
+<form>
+	Enter empId<input type="text" name="" id="empid"><br>
+	Enter Name<input type="text" name="" id="name"><br>
+	Enter Salary<input type="text" name="" id="salary"><br>
+
+	<input type="button" name="" onclick="saveRecord()" value="SAVE"> <br>
+	<input type="button" name="" onclick="displayRecords()" value="Display"> <br>
+
+	<div id="d1"> </div>
+
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var db=openDatabase('myAngularDB','1.0','Description',2*1024*1024);
+
+    
+    
+    
+
+
+    	var db=openDatabase('myAngularDB','1.0','Description',2*1024*1024);
+		db.transaction(function(tx){
+			tx.executeSql('create table employee(id unique,name,salary)')
+		})
+    
+    
+    
+    
+    l>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		//Consructor version
+
+		function Employee(empId=0,empName="",salary=0){
+			this.empId=empId;
+			this.empName=empName;
+			this.salary=salary;
+			this.showEmployeeDetails=function(){
+				return ("EMployee details are "+this.empId+" "+this.empName+" "+this.salary);
+			}
+
+		}
+
+     	var collection=new Array();
+
+
+     	function saveRecord(){
+
+     		var id=parseInt(document.getElementById('empid').value)
+     		var name=(document.getElementById('name').value)
+     		var salary=parseInt(document.getElementById('salary').value)
+
+     		collection.push(new Employee(id,name,salary))
+     		alert("Record inserted successfully....")
+
+     	}
+
+     	function displayRecords(){
+     		var temp=""
+     		for (var i = 0; i < collection.length; i++) {
+     			temp+=collection[i].showEmployeeDetails();	
+     		}
+
+     		document.getElementById('d1').innerHTML=temp;
+     	}
+
+
+     	
+
+	</script>
+</head>
+<body>
+
+<form>
+	Enter empId<input type="text" name="" id="empid"><br>
+	Enter Name<input type="text" name="" id="name"><br>
+	Enter Salary<input type="text" name="" id="salary"><br>
+
+	<input type="button" name="" onclick="saveRecord()" value="SAVE"> <br>
+	<input type="button" name="" onclick="displayRecords()" value="Display"> <br>
+
+	<div id="d1"> </div>
+
+</form>
+</body>
+</html>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		//Consructor version
+
+		function Employee(empId=0,empName="",salary=0){
+			this.empId=empId;
+			this.empName=empName;
+			this.salary=salary;
+			this.showEmployeeDetails=function(){
+				alert("EMployee details are "+this.empId+" "+this.empName+" "+this.salary);
+			}
+
+		}
+
+		var e1=new Employee(101,"Eshan",10000);
+		e1.showEmployeeDetails();
+
+		var e2=new Employee();
+		e2.showEmployeeDetails();
+
+
+
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		//Consructor version
+
+		function Employee(){
+			this.empId=101;
+			this.empName="Tanish";
+			this.salary=10000;
+			this.showEmployeeDetails=function(){
+				alert("EMployee details are "+this.empId+" "+this.empName+" "+this.salary);
+			}
+
+		}
+
+		var e1=new Employee();
+		e1.showEmployeeDetails();
+
+
+
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="myScript.js"></script>
+	<link rel="stylesheet" type="text/css" href="myStyle.css" title="style1">
+	<link rel="alternate stylesheet" type="text/css" href="myStyle2.css" title="style2">
+</head>
+<body>
+	<form>
+		Enter first number<input type="text" name="" id="txt1"> <br/>
+		Enter second number<input type="text" name="" id="txt2"> <br/>
+		<input type="button" name="" onclick="addition();" value="Addition" >
+
+
+	</form>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+		function addition(){
+
+			var val1=parseInt(document.getElementById('txt1').value)
+			var val2=parseInt(document.getElementById('txt2').value)
+
+
+			alert("Addition "+(val1+val2))
+		}
+
+    
+    
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="myScript.js"></script>
+</head>
+<body>
+
+	<form>
+		Enter first number<input type="text" name="" id="txt1"> <br/>
+		Enter second number<input type="text" name="" id="txt2"> <br/>
+
+		<input type="button" name="" onclick="addition();" value="Addition" >
+
+
+	</form>
+
+
+</body>
+</html>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+
+
+		function addition(){
+
+			var val1=parseInt(document.getElementById('txt1').value)
+			var val2=parseInt(document.getElementById('txt2').value)
+
+
+			alert("Addition "+(val1+val2))
+		}
+
+
+		// var num1=parseInt(prompt("Enter first number"));
+		// var num2=parseInt(prompt("Enter first number"));
+
+
+		// alert("Addition of two number"+(num1+num2))
+
+
+
+		
+		// // alert("Welcome to javascript code");
+
+		// // var name=prompt("Enter your name");
+		// // alert("Name is "+name)
+
+
+		// // console.log("Message to display on console")
+
+		// // var result=confirm("Do you want break???")
+		// // alert(result)
+
+
+		// // document.write("Message to display on browser")
+
+
+
+
+	</script>
+</head>
+<body>
+
+	<form>
+		Enter first number<input type="text" name="" id="txt1"> <br/>
+		Enter second number<input type="text" name="" id="txt2"> <br/>
+
+		<input type="button" name="" onclick="addition();" value="Addition" >
+
+
+	</form>
+
+
+</body>
+</html>
+
+
+
+
+
+
+var num1=parseInt(prompt("Enter first number"));
+		var num2=parseInt(prompt("Enter first number"));
+
+
+		alert("Addition of two number"+(num1+num2))
+
+        
+        
+        
+        
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		
+		alert("Welcome to javascript code");
+
+		var name=prompt("Enter your name");
+		alert("Name is "+name)
+
+
+		console.log("Message to display on console")
+
+		var result=confirm("Do you want break???")
+		alert(result)
+
+
+		document.write("Message to display on browser")
+
+
+
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome</title>
+	<script type="text/javascript">
+		alert("Application is about to load.....")
+	</script>
+
+	<style type="text/css">
+		table{
+			background-color: green;
+		}
+		h1{
+			color:red;
+		}
+	</style>
+</head>
+<body>
+
+<h1>Welcome to Web application</h1>
+
+
+<form>
+	<table border='5px'>
+
+		<tr>
+			<td>Enter user Name</td>
+			<td><input type="text" name="" id="user"></td>
+		</tr>
+
+        <tr>
+			<td>Enter Password</td>
+			<td><input type="Password" name="" id="pass"></td>
+		</tr>		
+		<tr>
+			<td><input type="button" name="" value="Click Me" onclick="alert('Button clicked')"></td>
+		</tr>
+
+	</table>
+
+
+</form>
+
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome</title>
+</head>
+<body>
+
+<h1>Welcome to Web application</h1>
+
+
+<form>
+	<table border='5px'>
+
+		<tr>
+			<td>Enter user Name</td>
+			<td><input type="text" name="" id="user"></td>
+		</tr>
+
+        <tr>
+			<td>Enter Password</td>
+			<td><input type="Password" name="" id="pass"></td>
+		</tr>		
+		<tr>
+			<td><input type="submit" name="" value="Click Me"></td>
+		</tr>
+
+	</table>
+
+
+</form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome</title>
+	<meta http-equiv="refresh" content="1">
+</head>
+<body>
+
+<h1>Welcome to Web application</h1>
+</body>
+</html>
