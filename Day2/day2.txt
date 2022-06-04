@@ -1,0 +1,583 @@
+3] Child to Parent Data Sharing vie @Output and EventEmitter
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-parent3',
+  template: `
+    <p>
+      parent3 works!
+    </p>
+    Message: {{message}}
+    <app-child3 (messageEvent)="receiveMessage($event)"></app-child3>
+  `,
+  styles: [
+  ]
+})
+export class Parent3Component implements OnInit {
+
+  message:string=''
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  receiveMessage($event:any){
+    this.message=$event;
+  }
+}
+
+
+
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+
+
+@Component({
+  selector: 'app-child3',
+  template: `
+    <p>
+      child3 works!
+      <button (click)="sendMessage()">SEND MESSAGE</button>
+    </p>
+  `,
+  styles: [
+  ]
+})
+export class Child3Component implements OnInit {
+
+  message: string="Hello Angular from Child3Component"
+  @Output() messageEvent=new EventEmitter<string>();
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  sendMessage(){
+   this.messageEvent.emit(this.message)
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2] Child to Parent Data Sharing via ViewChild with ngAfterViewInit
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {Child2Component} from '../child2/child2.component'
+
+
+
+@Component({
+  selector: 'app-parent2',
+  template: `
+    <p>
+      parent2 works!
+    </p>
+  Message : {{Message}}
+    <app-child2></app-child2>
+  `,
+  styles: [
+  ]
+})
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-child2',
+  template: `
+    <p>
+      child2 works!
+    </p>
+  `,
+  styles: [
+  ]
+})
+export class Child2Component implements OnInit {
+
+  message="HelloAngular from Child"
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+export class Parent2Component implements OnInit {
+  Message:string=''
+  @ViewChild(Child2Component) child:any;
+  constructor() { }
+
+  ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+    this.Message=this.child.message;
+  }
+}
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-child2',
+  template: `
+    <p>
+      child2 works!
+    </p>
+  `,
+  styles: [
+  ]
+})
+export class Child2Component implements OnInit {
+
+  message="HelloAngular from Child"
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1] Parent to Child Data Sharing via @Input
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <p>
+      parent works!
+      
+    </p>
+    <app-child [childMessage]="parentMessage"></app-child>
+  `,
+  styles: [
+  ]
+})
+export class ParentComponent implements OnInit {
+
+  parentMessage="Message from Parent Component"
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+import { Component, OnInit,Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>
+      child works! {{childMessage}}
+    </p>
+    
+  `,
+  styles: [
+  ]
+})
+export class ChildComponent implements OnInit {
+
+  @Input() childMessage: string='';
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+APP HTML PAGE
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>App Component is called</h1>
+
+    <app-parent></app-parent>
+</body>
+
+</html>
+
+
+
+
+
+2] Child to Parent Data Sharing via ViewChild with AfterViewInit
+3] Child to Parent Data Sharing vie @Outout and EventEmitter
+
+
+
+
+
+
+ng generate component --skip-tests=true Parent --inlineStyle=true --inlineTemplate=true 
+
+ng generate component --skip-tests=true Child --inlineStyle=true --inlineTemplate=true 
+
+
+
+
+
+Difference Between Constructor and ngOnInit
+
+
+The Constructor is executed when the class is instantiated. It has nothing do with the angular. It is the feature of Javascript and Angular does not have the control over it
+The ngOnInit is Angular specific and is called when the Angular has initialized the component with all its input properties
+The @Input properties are available under the ngOnInit lifecycle hook. This will help you to do some initialization stuff like getting data from the back-end server etc to display in the view
+@Input properties are shows up as undefined inside the constructor
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-lifecyclehooks',
+  template: `
+    <p>
+      lifecyclehooks works!
+     
+    </p>
+    <div *ngFor="let book of books">
+        {{book}}
+      </div>
+  `,
+  styles: [
+  ]
+})
+export class LifecyclehooksComponent implements OnInit {
+
+  books=["Book1","Book2","Book3"]
+
+
+
+  constructor() { 
+    console.log("Constructor of LifeCycleHooksComponent is called")
+    setInterval(() =>{
+      this.books.push("new Book")
+    },2000)
+
+  }
+
+  ngOnChanges(){
+    console.log("ngOnChanges of LifeCycleHooksComponent is called")
+  }
+
+
+
+  ngOnInit(): void {
+    console.log("ngOnInit of LifeCycleHooksComponent is called")
+  }
+
+
+  // ngDoCheck(){
+  //   console.log("ngDoCheck of LifeCycleHooksComponent is called")
+  // }
+
+
+  // ngAfterContentInit(): void {
+  //   console.log("ngAfterContentInit of LifeCycleHooksComponent is called") 
+  // }
+
+  // ngAfterContentChecked(): void {
+  //   console.log("ngAfterContentChecked of LifeCycleHooksComponent is called")
+  // }
+
+  // ngAfterViewInit(): void {
+  //   console.log("ngAfterViewInit of LifeCycleHooksComponent is called")
+  // }
+
+  // ngAfterViewChecked(){
+  //   console.log("ngAfterViewChecked of LifeCycleHooksComponent is called")
+  // }
+
+  // ngonDestroy(): void {
+  //   console.log("ngonDestroy of LifeCycleHooksComponent is called")
+
+  // }
+
+}
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>App Component is called</h1>
+    <!-- <app-world firstname="Manish" age="23"></app-world>
+    <app-world firstname="Tanish" age="12"></app-world> -->
+
+
+    <app-lifecyclehooks></app-lifecyclehooks>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-lifecyclehooks',
+  template: `
+    <p>
+      lifecyclehooks works!
+    </p>
+  `,
+  styles: [
+  ]
+})
+export class LifecyclehooksComponent implements OnInit {
+
+  constructor() { 
+    console.log("Constructor of LifeCycleHooksComponent is called")
+
+  }
+
+  ngOnChanges(){
+    console.log("ngOnChanges of LifeCycleHooksComponent is called")
+  }
+
+
+
+  ngOnInit(): void {
+    console.log("ngOnInit of LifeCycleHooksComponent is called")
+  }
+
+
+  ngDoCheck(){
+    console.log("ngDoCheck of LifeCycleHooksComponent is called")
+  }
+
+
+  ngAfterContentInit(): void {
+    console.log("ngAfterContentInit of LifeCycleHooksComponent is called") 
+  }
+
+  ngAfterContentChecked(): void {
+    console.log("ngAfterContentChecked of LifeCycleHooksComponent is called")
+  }
+
+  ngAfterViewInit(): void {
+    console.log("ngAfterViewInit of LifeCycleHooksComponent is called")
+  }
+
+  ngAfterViewChecked(){
+    console.log("ngAfterViewChecked of LifeCycleHooksComponent is called")
+  }
+
+  ngonDestroy(): void {
+    console.log("ngonDestroy of LifeCycleHooksComponent is called")
+
+  }
+
+}
+
+
+
+
+
+
+
+ng generate component --skip-tests=true lifecyclehooks --inlineStyle=true --inlineTemplate=true
+
+
+
+
+
+ngOnChanges − When the value of a data bound property changes, then this method is called.
+ngOnInit − This is called whenever the initialization of the directive/component after Angular first displays the data-bound properties happens.
+ngDoCheck − This is for the detection and to act on changes that Angular can't or won't detect on its own.
+ngAfterContentInit − This is called in response after Angular projects external content into the component's view.
+ngAfterContentChecked − This is called in response after Angular checks the content projected into the component.
+ngAfterViewInit − This is called in response after Angular initializes the component's views and child views.
+ngAfterViewChecked − This is called in response after Angular checks the component's views and child views.
+ngOnDestroy − This is the cleanup phase just before Angular destroys the directive/component.
+
+
+
+
+
+ng generate component hero-detail
+
+ng generate component habit-list --inline-style --inline-template -d
+
+  "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "inlineStyle": true,
+                    "inlineTemplate": true
+                }
+            },
+
+
+                
+                
+                
+                    
+
+
+The creation of the Angular component requires you to follow these steps
+
+Create the Component file
+Import the required external Classes/Functions
+Create the Component class and export it
+Add @Component decorator
+Add metadata to @Component decorator
+Create the Template
+Create the CSS Styles
+Register the Component in Angular Module
+
+
+
+
+
+
+
+The Component is the main building block of an Angular Application.
+The Component contains the data & user interaction logic that defines how the View looks and behaves. A view in Angular refers to a template (HTML).
+The Angular Components are plain JavaScript classes and defined using @Component Decorator. This Decorator provides the component with the View to display & Metadata about the Component
+The Component is responsible to provide the data to the view. The Angular does this by using data binding to get the data from the Component to the View. This is done using the special HTML markup knows as the Angular Template Syntax. The Component can also get notified when the View Changes.
+The Angular applications will have lots of components. Each component handles a small part of UI. These components work together to produce the complete user interface of the application
+The Components consists of three main building blocks
+Template
+Class
+MetaData
+
+
+
+
+
+
+
+The Component is the main building block of an Angular Application. A Component contains the definition of the View and the data that defines how the View looks and behaves.  The Angular Components are plain javascript classes and defined using @component Decorator. This Decorator provides the component with the View to display & Metadata about the class
+
+The Component passes the data to the view using a process called Data Binding. This is done by Binding the DOM Elements to component properties. Binding can be used to display component class property values to the user, change element styles, respond to a user event, etc.
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>App Component is called</h1>
+    {{title}}
+    <app-hello></app-hello>
+
+
+    <app-world></app-world>
+</body>
+
+</html>
+
+
+
+
+
+
+ng generate component --skip-tests=true hello
+
+
+
+
+ng generate component --skip-tests=ttruerue world --inlineTemplate=true --inlineStyle=true
+     

@@ -1,0 +1,2 @@
+ng generate component --skip-tests=true hello
+ng generate component --skip-tests=true world --inlineTemplate=true --inlineStyle=trueplate=true --inlineStyle=true

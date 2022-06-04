@@ -1,0 +1,1668 @@
+https://gofile.io/d/4MfEfB
+    
+    
+    
+    
+    
+    
+
+<h1>I am in app.component.html file</h1>
+<app-product-item></app-product-item>
+
+
+
+
+
+import { ProductsModule } from './products/products.module';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    ProductsModule
+      ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ProductItemComponent } from './product-item/product-item.component';
+
+
+
+@NgModule({
+  declarations: [
+    ProductItemComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  exports: [ProductItemComponent]
+})
+export class ProductsModule { }
+
+
+
+
+
+
+
+
+ng generate component products/productItem --module=products
+
+
+
+
+
+ng generate module products
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { NgModule } from '@angular/core';
+
+import { SomeComponent } from './some.component';
+import { SomeDirective } from './some.directive';
+import { SomePipe } from './some.pipe';
+import { SomeService } from './shared/some.service';
+
+@NgModule({
+  declarations: [SomeComponent, SomeDirective, SomePipe],
+  providers: [SomeService]
+})
+export class SomeModule {}
+
+
+
+
+
+
+
+An NgModule is defined by a class decorated with @NgModule(). The @NgModule() decorator is a function that takes a single metadata object, whose properties describe the module. The most important properties are as follows.
+
+declarations: The components, directives, and pipes that belong to this NgModule.
+
+exports: The subset of declarations that should be visible and usable in the component templates of other NgModules.
+
+imports: Other modules whose exported classes are needed by component templates declared in this NgModule.
+
+providers: Creators of services that this NgModule contributes to the global collection of services; they become accessible in all parts of the app. (You can also specify providers at the component level.)
+
+bootstrap: The main application view, called the root component, which hosts all other app views. Only the root NgModule should set the bootstrap property.
+
+    
+    
+    
+    
+
+Angular apps are modular and Angular has its own modularity system called NgModules. NgModules are containers for a cohesive block of code dedicated to an application domain, a workflow, or a closely related set of capabilities. They can contain components, service providers, and other code files whose scope is defined by the containing NgModule. They can import functionality that is exported from other NgModules, and export selected functionality for use by other NgModules.
+
+Every Angular app has at least one NgModule class, the root module, which is conventionally named AppModule and resides in a file named app.module.ts. You launch your app by bootstrapping the root NgModule.
+
+
+
+
+
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'tempConverter'
+})
+export class TempConverterPipe implements PipeTransform {
+  transform(value: number, unit: string) {
+      if(value && !isNaN(value)) {
+          if (unit === 'C') {
+              var temperature = (value - 32) /1.8 ;
+              return temperature.toFixed(2);
+          } else if (unit === 'F'){
+              var temperature = (value * 1.8 ) + 32
+              return temperature.toFixed(2);
+          }
+      }
+      return;
+  }
+}
+
+
+
+
+d
+
+
+<fieldset>
+    <legend>DATE Zone </legend>
+    INDIA IST :- {{toDate|date:'short':'IST'}}
+    <br/>USA CDT :- {{toDate|date:'short':'CDT'}} <br/>
+    <br/>INDIA(+0530) :- {{toDate|date:'short':'+0530'}} <br/>
+    <br/>INDIA(-500) :- {{toDate|date:'short':'-500'}} <br/>
+</fieldset>
+
+
+
+
+
+
+
+
+<H1>
+    PIPE EXAMPLE</H1>
+<fieldset>
+    <legend>Word Count</legend>
+
+    <input type="text" class="form-control" [(ngModel)]="message" />
+    <br/> Total Word Count :- {{message|wordcount}}
+</fieldset>
+
+
+
+<fieldset>
+    <legend>Fahrenheit to Celsius</legend>
+    <div class='card'>
+        <div class="card-body">
+
+            <div class="row">
+                <h3>Fahrenheit to Celsius </h3>
+            </div>
+            <div class="row">
+                <p> Fahrenheit : <input type="text" [(ngModel)]="Fahrenheit" /> Celsius : {{Fahrenheit | tempConverter:'C'}} </p>
+            </div>
+
+            <div class="row">
+                <h3>Celsius to Fahrenheit </h3>
+            </div>
+            <div class="row">
+                <p> celsius : <input type="text" [(ngModel)]="celcius" /> Fahrenheit : {{celcius | tempConverter:'F'}} </p>
+            </div>
+        </div>
+    </div>
+
+
+
+</fieldset>
+
+
+
+
+
+<fieldset>
+    <legend>Search Filter Example</legend>
+    <div class="">
+        <input type="text" class="form-control" [(ngModel)]="search" />
+
+    </div>
+
+    <div class="search-rec" *ngFor="let data of employee|searchFilter:search">
+        <p>{{data.name}} {{data.id}} {{data.email}} <a href={{data.url}}>URL</a></p>
+
+
+    </div>
+
+
+</fieldset>
+
+
+<fieldset>
+
+    <legend>Custome Filter</legend>
+    Reverse :- {{str|reverseStr}}
+    <br/> SQRT :- {{1000|mysqrt}}
+
+    <h2>Power Boost Calculator</h2>
+    <div>Normal power: <input [(ngModel)]="power"></div>
+    <div>Boost factor: <input [(ngModel)]="factor"></div>
+    <p>
+        Super Hero Power: {{power | exponentialStrength: factor}}
+    </p>
+</fieldset>
+
+
+<fieldset>
+    <legend> Currency Pipe </legend>
+    <p ngNonBindable>{{123456.34|currency:'Rs.'}}</p>
+    <p>{{123456.34|currency:'Rs.'}}</p>
+
+    <p ngNonBindable>{{123456.34|currency:'CAD':'code'}}</p>
+    <p>{{123456.34|currency:'CAD':'code'}}</p>
+
+    <p ngNonBindable>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+    <p>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+</fieldset>
+
+
+<fieldset>
+    <legend>Date Filter</legend>
+
+    <p>Birthday on {{birthday|date:format}}</p>
+    <button (click)="toggleFormat()">Toggle Format</button>
+
+    <p ngNonBindable>{{dateVal|date:'shortTime'}}</p>
+    <p>{{dateVal|date:'shortTime'}}</p>
+
+
+    <p ngNonBindable>{{dateVal|date:'fullDate'}}</p>
+    <p>{{dateVal|date:'fullDate'}}</p>
+
+    <p ngNonBindable>{{dateVal|date:'d/M/y'}}</p>
+    <p>{{dateVal|date:'d/M/y'}}</p>
+
+
+
+</fieldset>
+
+
+<fieldset>
+    <legend>Number Filter</legend>
+    <p ngNonBindable>{{3.43434534|number:'2.1-2'}}</p>
+    <p>{{3.43434534|number:'2.1-2'}}</p>
+
+    <p ngNonBindable>{{3.43434534|number:'2.4-4'}}</p>
+    <p>{{3.43434534|number:'2.4-4'}}</p>
+</fieldset>
+
+<fieldset>
+    <legend>String pipes/filter</legend>
+    <p>{{str}}[0:4]:- >'{{str|slice:0:4}}'
+        <p>{{str}}[4:0]:- >'{{str|slice:4:0}}'
+            <p>{{str}}[4]:- >'{{str|slice:4}}'
+                <p>{{str}}[-4:-2]:- >'{{str|slice:-4:-2}}'
+                    <p>{{str}}[-100]:- >'{{str|slice:-100}}'
+                        <p>Lowercase '{{str|lowercase}}'</p>
+                        <p>Uppercase '{{str|uppercase}}'</p>
+</fieldset>
+
+
+<fieldset>
+    <legend>JSON Fiter</legend>
+    <b>Without JSON Filter {{jsonvalue}}</b><br/>
+    <b>With JSON Filter {{jsonvalue|json}}</b>
+</fieldset>
+<br/>
+<br/>
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'wordcount'
+})
+export class WordcountPipe implements PipeTransform {
+
+  transform(value:any,args?:any):any{
+    return value.trim().split(/\s+/).length;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+PIPE EXAMPLE</H1>
+<fieldset>
+    <legend>Word Count</legend>
+
+    <input type="text" class="form-control" [(ngModel)]="message" /> <br/>{{message|wordcount}}
+</fieldset>
+
+
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-pipe-example',
+  templateUrl: "pipe-example.component.html",
+  // styles: ['legend{color:red}.search-rec{width:50%;height:30px;background-color:pink}'
+  styleUrls:['pipe-example.component.css']
+  
+})
+export class PipeExampleComponent implements OnInit {
+  celcius: number=0;
+  Fahrenheit: number=0;  
+  search:string=""
+  employee=[
+    {
+      "id":101,
+      "name":"Eshan Madake",
+      "email":"eshan@gmail.com",
+      "url":"https://www.google.co.in/"
+    },
+    {
+      "id":102,
+      "name":"Manish Sharma",
+      "email":"manish@gmail.com",
+      "url":"https://www.google.co.in/"
+    },
+    {
+      "id":103,
+      "name":"Anuja Patil",
+      "email":"anj@gmail.com",
+      "url":"https://www.google.co.in/"
+    },
+    {
+      "id":104,
+      "name":"Kranti Mishara",
+      "email":"k132@gmail.com",
+      "url":"https://www.google.co.in/"
+    },
+    {
+      "id":105,
+      "name":"Amitabh Kumbhar",
+      "email":"amitk@gmail.com",
+      "url":"https://www.google.co.in/"
+    },
+    {
+      "id":106,
+      "name":"Rajesh Kulkarni",
+      "email":"rajeshk@gmail.com",
+      "url":"https://www.google.co.in/"
+    }
+  
+  ]
+
+
+  dateVal=new Date(1980,2,2)
+  birthday=new Date(1978,2,2)
+  toggle=true
+  power = 5;
+  factor = 1;
+  str="Welcome to angular learning"
+  jsonvalue={name:'Tanish',age:"23","address":{city:"mumbai",area:"Dadar"}}
+
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  get format(){
+    return this.toggle?'shortDate':'fullDate';
+  }
+
+  toggleFormat(){
+    this.toggle=!this.toggle
+  }
+}
+
+              
+              
+              
+
+
+
+
+
+
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'tempConverter'
+})
+export class TempConverterPipe implements PipeTransform {
+  transform(value: number, unit: string) {
+      if(value && !isNaN(value)) {
+          if (unit === 'C') {
+              var temperature = (value - 32) /1.8 ;
+              return temperature.toFixed(2);
+          } else if (unit === 'F'){
+              var temperature = (value * 1.8 ) + 32
+              return temperature.toFixed(2);
+          }
+      }
+      return;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="search-rec" *ngFor="let data of employee|searchFilter:search">
+        <p>{{data.name}} {{data.id}} {{data.email}} <a href={{data.url}}>URL</a></p>
+
+
+    </div>
+    
+    
+    
+    
+
+
+legend {
+    color: red
+}
+
+.search-rec {
+    width: 30%;
+    border: 0.5rem outset pink;
+    outline: 0.5rem solid khaki;
+    border-radius: 10px;
+    font: bold 1rem sans-serif;
+    margin: 2rem;
+    padding: 1rem;
+    outline-offset: 0.5rem;
+}
+
+
+
+
+
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'searchFilter'
+})
+export class SearchFilterPipe implements PipeTransform {
+
+  transform(value:any,args?:any):any{
+    if(!value)return null;
+    if(!args) return value
+
+    args=args.toLowerCase();
+
+    return value.filter(function(data:any){
+      return JSON.stringify(data).toLowerCase().includes(args);
+    })
+  }
+
+}
+
+
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-pipe-example',
+  templateUrl: "pipe-example.component.html",
+  styles: ['legend{color:red}'
+  ]
+})
+export class PipeExampleComponent implements OnInit {
+  search:string=""
+  employee=[
+    {
+      "id":101,
+      "name":"Eshan Madake",
+      "email":"eshan@gmail.com"
+    },
+    {
+      "id":102,
+      "name":"Manish Sharma",
+      "email":"manish@gmail.com"
+    },
+    {
+      "id":103,
+      "name":"Anuja Patil",
+      "email":"anj@gmail.com"
+    },
+    {
+      "id":104,
+      "name":"Kranti Mishara",
+      "email":"k132@gmail.com"
+    },
+    {
+      "id":105,
+      "name":"Amitabh Kumbhar",
+      "email":"amitk@gmail.com"
+    },
+    {
+      "id":106,
+      "name":"Rajesh Kulkarni",
+      "email":"rajeshk@gmail.com"
+    }
+  
+  ]
+
+
+  dateVal=new Date(1980,2,2)
+  birthday=new Date(1978,2,2)
+  toggle=true
+  power = 5;
+  factor = 1;
+  str="Welcome to angular learning"
+  jsonvalue={name:'Tanish',age:"23","address":{city:"mumbai",area:"Dadar"}}
+
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  get format(){
+    return this.toggle?'shortDate':'fullDate';
+  }
+
+  toggleFormat(){
+    this.toggle=!this.toggle
+  }
+}
+
+
+
+
+
+
+
+
+<fieldset>
+    <legend>Search Filter Example</legend>
+    <div class="">
+        <input type="text" class="form-control" [(ngModel)]="search" />
+
+    </div> --st
+
+    <div class="" *ngFor="let data of employee|searchFilter:search">
+        <p>{{data.name}} {{data.id}} {{data.email}}</p>
+
+
+    </div>
+
+
+</fieldset>
+
+
+ng g p search-filter --skip-tests
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ng generate pipe exponentialStrength --skip-tests
+
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'exponentialStrength'
+})
+export class ExponentialStrengthPipe implements PipeTransform {
+
+  transform(value: number, exponent = 1): number {
+    return Math.pow(value, exponent);
+  }
+
+}
+
+
+
+
+
+
+
+<fieldset>
+      <legend>Custome Filter</legend>
+      Reverse :- {{str|reverseStr}}
+      <br/>
+      SQRT :- {{1000|mysqrt}}
+
+      <h2>Power Boost Calculator</h2>
+    <div>Normal power: <input [(ngModel)]="power"></div>
+    <div>Boost factor: <input [(ngModel)]="factor"></div>
+    <p>
+      Super Hero Power: {{power | exponentialStrength: factor}}
+    </p>
+    </fieldset>
+
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-power-booster',
+  template: `
+    <h2>Power Booster</h2>
+    <p>Super power boost: {{2 | exponentialStrength: 10}}</p>
+  `
+})
+export class PowerBoosterComponent { }
+
+
+
+
+import { Component } from '@angular/core';
+ 
+@Component({
+  selector: 'app-power-boost-calculator',
+  template: `
+    <h2>Power Boost Calculator</h2>
+    <div>Normal power: <input [(ngModel)]="power"></div>
+    <div>Boost factor: <input [(ngModel)]="factor"></div>
+    <p>
+      Super Hero Power: {{power | exponentialStrength: factor}}
+    </p>
+  `
+})
+export class PowerBoostCalculatorComponent {
+  power = 5;
+  factor = 1;
+}
+
+
+
+
+
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'mysqrt'
+})
+export class MysqrtPipe implements PipeTransform {
+
+  transform(value:number):number{
+    return Math.sqrt(value)
+  }
+
+}
+
+
+
+
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'reverseStr'
+})
+export class ReverseStrPipe implements PipeTransform {
+
+  transform(value: string): string {
+    let newStr:string="";
+    for(var i=value.length-1;i>=0;i--) {
+      newStr+=value.charAt(i)
+    }    
+    return newStr;
+  }
+
+}
+
+
+
+
+
+
+
+ng generate pipe reverseStr --skip-tests
+
+
+
+<fieldset>
+      <legend>String pipes/filter</legend>
+        <p>{{str}}[0:4]:- >'{{str|slice:0:4}}'
+        <p>{{str}}[4:0]:- >'{{str|slice:4:0}}'
+        <p>{{str}}[4]:- >'{{str|slice:4}}'
+        <p>{{str}}[-4:-2]:- >'{{str|slice:-4:-2}}'
+        <p>{{str}}[-100]:- >'{{str|slice:-100}}'
+        <p>Lowercase '{{str|lowercase}}'</p>
+        <p>Uppercase '{{str|uppercase}}'</p>
+    </fieldset>
+
+
+    <fieldset>
+      <legend>JSON Fiter</legend>
+    <b>{{jsonvalue|json}}</b>
+    </fieldset>
+
+    
+    
+    
+    
+      jsonvalue={name:'Tanish',age:"23","address":{city:"mumbai",area:"Dadar"}}
+
+        
+        
+        
+        
+        
+        
+
+
+<fieldset>
+      <legend>String pipes/filter</legend>
+        <p>{{str}}[0:4]:- >'{{str|slice:0:4}}'
+        <p>{{str}}[4:0]:- >'{{str|slice:4:0}}'
+        <p>{{str}}[4]:- >'{{str|slice:4}}'
+        <p>{{str}}[-4:-2]:- >'{{str|slice:-4:-2}}'
+        <p>{{str}}[-100]:- >'{{str|slice:-100}}'
+          
+    </fieldset>
+    
+    
+    
+    
+    
+    
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-pipe-example',
+  template: `
+    <fieldset>
+      <legend> Currency Pipe </legend>
+      <p ngNonBindable>{{123456.34|currency:'Rs.'}}</p>
+      <p>{{123456.34|currency:'Rs.'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'code'}}</p>
+      <p>{{123456.34|currency:'CAD':'code'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+      <p>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Date Filter</legend>
+
+    <p>Birthday on {{birthday|date:format}}</p>
+    <button (click)="toggleFormat()">Toggle Format</button>
+
+      <p ngNonBindable>{{dateVal|date:'shortTime'}}</p>
+      <p>{{dateVal|date:'shortTime'}}</p>
+
+
+      <p ngNonBindable>{{dateVal|date:'fullDate'}}</p>
+      <p>{{dateVal|date:'fullDate'}}</p>
+
+      <p ngNonBindable>{{dateVal|date:'d/M/y'}}</p>
+      <p>{{dateVal|date:'d/M/y'}}</p>
+
+
+
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Number Filter</legend>
+      <p ngNonBindable>{{3.43434534|number:'2.1-2'}}</p>
+      <p>{{3.43434534|number:'2.1-2'}}</p>
+
+      <p ngNonBindable>{{3.43434534|number:'2.4-4'}}</p>
+      <p>{{3.43434534|number:'2.4-4'}}</p>
+    </fieldset>
+
+
+
+    
+  `,
+  styles: [
+  ]
+})
+export class PipeExampleComponent implements OnInit {
+  dateVal=new Date(1980,2,2)
+  birthday=new Date(1978,2,2)
+  toggle=true
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  get format(){
+    return this.toggle?'shortDate':'fullDate';
+  }
+
+  toggleFormat(){
+    this.toggle=!this.toggle
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <p>Birthday on {{birthday|date:format}}</p>
+    <button (click)="toggleFormat()">Toggle Format</button>
+    
+    
+    
+export class PipeExampleComponent implements OnInit {
+  dateVal=new Date(1980,2,2)
+  birthday=new Date(1978,2,2)
+  toggle=true
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  get format(){
+    return this.toggle?'shortDate':'fullDate';
+  }
+
+  toggleFormat(){
+    this.toggle=!this.toggle
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-pipe-example',
+  template: `
+    <fieldset>
+      <legend> Currency Pipe </legend>
+      <p ngNonBindable>{{123456.34|currency:'Rs.'}}</p>
+      <p>{{123456.34|currency:'Rs.'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'code'}}</p>
+      <p>{{123456.34|currency:'CAD':'code'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+      <p>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Date Filter</legend>
+      <p ngNonBindable>{{dateVal|date:'shortTime'}}</p>
+      <p>{{dateVal|date:'shortTime'}}</p>
+
+
+      <p ngNonBindable>{{dateVal|date:'fullDate'}}</p>
+      <p>{{dateVal|date:'fullDate'}}</p>
+
+      <p ngNonBindable>{{dateVal|date:'d/M/y'}}</p>
+      <p>{{dateVal|date:'d/M/y'}}</p>
+
+
+
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Number Filter</legend>
+      <p ngNonBindable>{{3.43434534|number:'2.1-2'}}</p>
+      <p>{{3.43434534|number:'2.1-2'}}</p>
+
+      <p ngNonBindable>{{3.43434534|number:'2.4-4'}}</p>
+      <p>{{3.43434534|number:'2.4-4'}}</p>
+
+
+    </fieldset>
+  `,
+  styles: [
+  ]
+})
+export class PipeExampleComponent implements OnInit {
+  dateVal=new Date(1980,2,2)
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-pipe-example',
+  template: `
+    <fieldset>
+      <legend> Currency Pipe </legend>
+      <p ngNonBindable>{{123456.34|currency:'Rs.'}}</p>
+      <p>{{123456.34|currency:'Rs.'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'code'}}</p>
+      <p>{{123456.34|currency:'CAD':'code'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+      <p>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Date Filter</legend>
+      <p ngNonBindable>{{dateVal|date:'shortTime'}}</p>
+      <p>{{dateVal|date:'shortTime'}}</p>
+
+
+      <p ngNonBindable>{{dateVal|date:'fullDate'}}</p>
+      <p>{{dateVal|date:'fullDate'}}</p>
+
+      <p ngNonBindable>{{dateVal|date:'d/M/y'}}</p>
+      <p>{{dateVal|date:'d/M/y'}}</p>
+
+
+
+    </fieldset>
+  `,
+  styles: [
+  ]
+})
+export class PipeExampleComponent implements OnInit {
+  dateVal=new Date(1980,2,2)
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+
+
+
+
+
+  <legend> Currency Pipe </legend>
+      <p ngNonBindable>{{123456.34|currency:'Rs.'}}</p>
+      <p>{{123456.34|currency:'Rs.'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'code'}}</p>
+      <p>{{123456.34|currency:'CAD':'code'}}</p>
+
+      <p ngNonBindable>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+      <p>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+      
+        
+        
+        
+        
+        
+        
+
+<fieldset>
+      <legend> Currency Pipe </legend>
+      <p>{{123456.34|currency:'Rs.'}}</p>
+    </fieldset>
+    
+    
+    
+    
+
+
+ng g c PipeExample --inlineTemplate=true --inlineStyle=true --skip-tests
+
+
+
+
+
+
+
+Pipes provided by Angular
+CurrencyPipe
+DatePipe
+DecimalPipe
+JsonPipe
+LowerCasePipe
+UpperCasePipe
+PercentPipe
+SlicePipe
+AsyncPipe
+
+
+
+
+
+<p>
+    event-example works!
+</p>
+<fieldset>
+    <legend>Click Event Example</legend>
+    {{clickMessage}}
+    <button (click)="myClick()">CLICK ME</button>
+</fieldset>
+
+<fieldset>
+    <legend>KeyUp Example</legend>
+
+    <p>{{value}}</p>
+    <input (keyup)="onKey($event)">
+
+</fieldset>
+
+<fieldset class="keyupclass">
+    <legend>Key Up Enter Event </legend>
+
+    <input #newHero (keyup.enter)="addHero(newHero.value)" (blur)="highlightMe($event)">
+
+    <button (click)="addHero(newHero.value)">Add</button>
+
+    <ul>
+        <li *ngFor="let hero of heroes">{{hero}}</li>
+    </ul>
+</fieldset>
+
+<fieldset class="mouseEnterClass">
+    <legend>Mouse Enter Event </legend>
+    <div class="d1" (mouseenter)="mouseEnterMethod()"></div>
+
+</fieldset>
+
+
+
+
+<fieldset class="scrollClass">
+    <legend>Scroll Event </legend>
+    <div class="scroll-container" (scroll)="scrollEventMethod($event)"></div>
+    <p></p>
+</fieldset>
+
+
+
+
+
+
+
+
+import { Component, OnInit,HostListener } from '@angular/core';
+
+@Component({
+  selector: 'app-event-example',
+  templateUrl:'./event-example.component.html' ,
+  styleUrls:['./event-example.component.css']
+})
+export class EventExampleComponent implements OnInit {
+ clickMessage="CLick me "
+ value=''
+ heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  myClick(){
+    this.clickMessage="You have clicked me"
+  }
+
+  onKey(event:any){
+    this.value+=event.target.value+'|'
+  }
+
+  highlightMe(event:any){
+    alert(event.target.value)
+  }
+
+
+  addHero(newHero: string) {
+    if (newHero) {
+      this.heroes.push(newHero);
+    }
+  }
+
+  mouseEnterMethod(){
+    alert("mouseEnterMethod is called")
+  }
+
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+
+  scrollEventMethod(event:Event){
+    alert("Scrolling....")
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+legend {
+    color: rgb(217, 33, 177);
+    font-size: 20px;
+}
+
+fieldset {
+    width: 50%;
+    height: 70px
+}
+
+.keyupclass {
+    height: 150px
+}
+
+.mouseEnterClass {
+    height: 100px
+}
+
+.d1 {
+    height: 40px;
+    width: 100px;
+    background-color: orange;
+}
+
+
+
+
+
+
+
+<p>
+    event-example works!
+</p>
+<fieldset>
+    <legend>Click Event Example</legend>
+    {{clickMessage}}
+    <button (click)="myClick()">CLICK ME</button>
+</fieldset>
+
+<fieldset>
+    <legend>KeyUp Example</legend>
+
+    <p>{{value}}</p>
+    <input (keyup)="onKey($event)">
+
+</fieldset>
+
+<fieldset class="keyupclass">
+    <legend>Key Up Enter Event </legend>
+
+    <input #newHero (keyup.enter)="addHero(newHero.value)" (blur)="highlightMe($event)">
+
+    <button (click)="addHero(newHero.value)">Add</button>
+
+    <ul>
+        <li *ngFor="let hero of heroes">{{hero}}</li>
+    </ul>
+</fieldset>
+
+<fieldset class="mouseEnterClass">
+    <legend>Mouse Enter Event </legend>
+    <div class="d1" (mouseenter)="mouseEnterMethod()"></div>
+
+</fieldset>
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-event-example',
+  templateUrl:'./event-example.component.html' ,
+  styleUrls:['./event-example.component.css']
+})
+export class EventExampleComponent implements OnInit {
+ clickMessage="CLick me "
+ value=''
+ heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  myClick(){
+    this.clickMessage="You have clicked me"
+  }
+
+  onKey(event:any){
+    this.value+=event.target.value+'|'
+  }
+
+  highlightMe(event:any){
+    alert(event.target.value)
+  }
+
+
+  addHero(newHero: string) {
+    if (newHero) {
+      this.heroes.push(newHero);
+    }
+  }
+
+  mouseEnterMethod(){
+    alert("mouseEnterMethod is called")
+  }
+
+
+}
+
+
+
+
+
+
+
+<p>
+    event-example works!
+</p>
+<fieldset>
+    <legend>Click Event Example</legend>
+    {{clickMessage}}
+    <button (click)="myClick()">CLICK ME</button>
+</fieldset>
+
+<fieldset>
+    <legend>KeyUp Event Example</legend>
+
+    <p>{{value}}</p>
+    <input (keyup)="onKey($event)">
+
+</fieldset>
+
+<fieldset class="keyupclass">
+    <legend>Key Up Enter Event </legend>
+
+    <input #newHero (keyup.enter)="addHero(newHero.value)" (blur)="highlightMe($event)">
+
+    <button (click)="addHero(newHero.value)">Add</button>
+
+    <ul>
+        <li *ngFor="let hero of heroes">{{hero}}</li>
+    </ul>
+
+
+
+</fieldset>
+
+
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-event-example',
+  templateUrl:'./event-example.component.html' ,
+  styleUrls:['./event-example.component.css']
+})
+export class EventExampleComponent implements OnInit {
+ clickMessage="CLick me "
+ value=''
+ heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  myClick(){
+    this.clickMessage="You have clicked me"
+  }
+
+  onKey(event:any){
+    this.value+=event.target.value+'|'
+  }
+
+  highlightMe(event:any){
+    alert(event.target.value)
+  }
+
+
+  addHero(newHero: string) {
+    if (newHero) {
+      this.heroes.push(newHero);
+    }
+  }
+
+
+}
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-event-example',
+  template: `
+    <p>
+      event-example works!
+    </p>
+    <fieldset>
+        <legend>Click Event Example</legend>
+        {{clickMessage}}
+        <button (click)="myClick()">CLICK ME</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>KeyUp Event Example</legend>
+
+      <p>{{value}}</p>
+      <input (keyup)="onKey($event)">
+    
+    </fieldset>
+
+  <fieldset>
+    <legend>Key Up Enter Event </legend>
+
+    <input #newHero
+      (keyup.enter)="addHero(newHero.value)"
+      (blur)="addHero(newHero.value); newHero.value='' ">
+
+    <button (click)="addHero(newHero.value)">Add</button>
+
+    <ul><li *ngFor="let hero of heroes">{{hero}}</li></ul>
+
+
+
+  </fieldset>
+
+  `,
+  styles: [ 'legend{color: purple;font-size:20px;}fieldset{width:50%;height:100px} ']
+})
+export class EventExampleComponent implements OnInit {
+ clickMessage="CLick me "
+ value=''
+ heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  myClick(){
+    this.clickMessage="You have clicked me"
+  }
+
+  onKey(event:any){
+    this.value+=event.target.value+'|'
+  }
+
+
+  addHero(newHero: string) {
+    if (newHero) {
+      this.heroes.push(newHero);
+    }
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@Component({
+  selector: 'app-little-tour',
+  template: `
+    <input #newHero
+      (keyup.enter)="addHero(newHero.value)"
+      (blur)="addHero(newHero.value); newHero.value='' ">
+
+    <button (click)="addHero(newHero.value)">Add</button>
+
+    <ul><li *ngFor="let hero of heroes">{{hero}}</li></ul>
+  `
+})
+export class LittleTourComponent {
+  heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+  addHero(newHero: string) {
+    if (newHero) {
+      this.heroes.push(newHero);
+    }
+  }
+}
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-event-example',
+  template: `
+    <p>
+      event-example works!
+    </p>
+    <fieldset>
+        <legend>Click Event Example</legend>
+        {{clickMessage}}
+        <button (click)="myClick()">CLICK ME</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>KeyUp Event Example</legend>
+
+      <p>{{value}}</p>
+      <input (keyup)="onKey($event)">
+    
+    </fieldset>
+
+
+
+  `,
+  styles: [
+  ]
+})
+export class EventExampleComponent implements OnInit {
+ clickMessage="CLick me "
+ value=''
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  myClick(){
+    this.clickMessage="You have clicked me"
+  }
+
+  onKey(event:any){
+    this.value+=event.target.value+'|'
+  }
+
+}
+
+
+
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-event-example',
+  template: `
+    <p>
+      event-example works!
+    </p>
+    {{clickMessage}}
+    <button (click)="myClick()">CLICK ME</button>
+  `,
+  styles: [
+  ]
+})
+export class EventExampleComponent implements OnInit {
+ clickMessage="CLick me "
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  myClick(){
+    this.clickMessage="You have clicked me"
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+(focus)="myMethod()"  // An element has received focus
+(blur)="myMethod()"   // An element has lost focus
+
+(submit)="myMethod()"  // A submit button has been pressed
+
+(scroll)="myMethod()"
+(cut)="myMethod()"
+(copy)="myMethod()"
+(paste)="myMethod()"
+
+(keydown)="myMethod()"
+(keypress)="myMethod()"
+
+
+
+(keyup)="myMethod()"
+
+(mouseenter)="myMethod()"
+(mousedown)="myMethod()"
+(mouseup)="myMethod()"
+
+(click)="myMethod()"
+(dblclick)="myMethod()"
+
+(drag)="myMethod()"
+(dragover)="myMethod()"
+(drop)="myMethod()"
+
+
+
+
+
+
+
+
+DAY 1 :- https://codebunk.com/b/7851100466731/
+DAY 2 : https://codebunk.com/b/7241100470230/
+     	https://codebunk.com/b/5141100470237/
