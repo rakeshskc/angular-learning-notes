@@ -1,0 +1,29 @@
+legend {
+    color: rgb(217, 33, 177);
+    font-size: 20px;
+}
+
+fieldset {
+    width: 50%;
+    height: 70px
+}
+
+.keyupclass {
+    height: 150px
+}
+
+.mouseEnterClass {
+    height: 100px
+}
+
+.d1 {
+    height: 40px;
+    width: 100px;
+    background-color: orange;
+}
+
+.scroll-container {
+    height: 40px;
+    width: 100px;
+    background-color: rgb(190, 181, 54);
+}

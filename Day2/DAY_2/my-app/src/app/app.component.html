@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="#home">Home</a>
+        <div class="subnav">
+            <button class="subnavbtn">Event <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a href="event">Event</a>
+
+            </div>
+        </div>
+        <div class="subnav">
+            <button class="subnavbtn">Services <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a href="#bring">Bring</a>
+                <a href="#deliver">Deliver</a>
+                <a href="#package">Package</a>
+                <a href="#express">Express</a>
+            </div>
+        </div>
+        <div class="subnav">
+            <button class="subnavbtn">Component <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a href="parenttochild1">Parent to Child using @Input</a>
+                <a href="child2parent1">Child to Parent using ViewChild</a>
+                <a href="child2parent2">Child to Parent using @Output</a>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- <h1 align="center">Learning Angular</h1>
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="event">Event Example</a>
+        <a href="pipe">Pipe Example</a>
+        <a href="component">Component </a>
+        <a href="about">About</a>
+    </div> -->
+    <router-outlet></router-outlet>
+
+
+
+
+
+
+
+    <!-- <app-parent3></app-parent3> -->
+
+    <!-- <app-ng-if-example></app-ng-if-example> -->
+
+    <!-- <app-event-example></app-event-example> -->
+
+    <!-- <app-pipe-example></app-pipe-example> -->
+</body>
+
+</html>

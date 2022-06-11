@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+
+		//Literal Version
+
+
+		var emp1={
+			empId:101,
+			empName:"tanish",
+			salary:100000,
+			showEmployeeDetails:function(){
+				alert("EMployee details are "+this.empId+" "+this.empName+" "+this.salary);
+			}
+		}
+
+		emp1.showEmployeeDetails();
+
+
+		//Consructor version
+
+		// function Employee(empId=0,empName="",salary=0){
+		// 	this.empId=empId;
+		// 	this.empName=empName;
+		// 	this.salary=salary;
+		// 	this.showEmployeeDetails=function(){
+		// 		return ("<br>EMployee details are "+this.empId+" "+this.empName+" "+this.salary);
+		// 	}
+		// }
+
+		// var db=openDatabase('myAngularDB','1.0','Description',2*1024*1024);
+		// db.transaction(function(tx){
+		// 	tx.executeSql('create table employee(id unique,name,salary)')
+		// })
+
+  //    	var collection=new Array();
+
+
+  //    	function saveRecord(){
+
+  //    		var id=parseInt(document.getElementById('empid').value)
+  //    		var name=(document.getElementById('name').value)
+  //    		var salary=parseInt(document.getElementById('salary').value)
+
+  //    		collection.push(new Employee(id,name,salary))
+  //    		alert("Record inserted successfully....")
+  //    		db.transaction(function(tx){
+  //    			// alert('Insert into employee values('+id+',"'+name+'",'+salary+")")
+		// 		 tx.executeSql('Insert into employee values('+id+',"'+name+'",'+salary+")")
+		// 	})
+		// 	alert("Record is also saved in websql")
+
+  //    	}
+
+  //    	function displayRecords(){
+
+  //    		db.transaction(function(tx){
+  //    			// alert('Insert into employee values('+id+',"'+name+'",'+salary+")")
+		// 		 tx.executeSql("select * from employee",[],function(tx,result){
+		// 		 	var len=result.rows.length;
+
+		// 		 	for(i=0;i<len;i++){
+		// 		 		alert(result.rows.item(i).name);
+		// 		 	}
+		// 		 })
+		// 	})
+
+     	
+  //    	}
+
+
+     	
+
+	</script>
+</head>
+<body>
+
+<form>
+	Enter empId<input type="text" name="" id="empid"><br>
+	Enter Name<input type="text" name="" id="name"><br>
+	Enter Salary<input type="text" name="" id="salary"><br>
+
+	<input type="button" name="" onclick="saveRecord()" value="SAVE"> <br>
+	<input type="button" name="" onclick="displayRecords()" value="Display"> <br>
+
+	<div id="d1"> </div>
+
+</form>
+</body>
+</html>

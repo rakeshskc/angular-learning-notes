@@ -1,0 +1,20 @@
+<section>
+    <h1>Reactive Form Example</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmitModelBased()">
+        <p>
+            <label>    First Name        </label>
+            <input type="text" formControlName="firstName">
+        </p>
+        <p>
+            <label>    Enter Password        </label>
+            <input type="password" formControlName="password">
+        </p>
+        <p>
+            <button type="submit" [disabled]="!form.valid">Reactive Form Submit</button>
+
+        </p>
+    </form>
+
+
+
+</section>

@@ -1,0 +1,147 @@
+<H1>
+    PIPE EXAMPLE</H1>
+
+
+<fieldset>
+    <legend>DATE Zone </legend>
+    INDIA IST :- {{toDate|date:'short':'IST'}}
+    <br/>USA CDT :- {{toDate|date:'short':'CDT'}} <br/>
+    <br/>INDIA(+0530) :- {{toDate|date:'short':'+0530'}} <br/>
+    <br/>INDIA(-500) :- {{toDate|date:'short':'-500'}} <br/>
+
+    <br/>{{toDate|date:'EEEE d MMMM'}}
+
+</fieldset>
+<fieldset>
+    <legend>Word Count</legend>
+
+    <input type="text" class="form-control" [(ngModel)]="message" />
+    <br/> Total Word Count :- {{message|wordcount}}
+</fieldset>
+
+
+
+<fieldset>
+    <legend>Fahrenheit to Celsius</legend>
+    <div class='card'>
+        <div class="card-body">
+
+            <div class="row">
+                <h3>Fahrenheit to Celsius </h3>
+            </div>
+            <div class="row">
+                <p> Fahrenheit : <input type="text" [(ngModel)]="Fahrenheit" /> Celsius : {{Fahrenheit | tempConverter:'C'}} </p>
+            </div>
+
+            <div class="row">
+                <h3>Celsius to Fahrenheit </h3>
+            </div>
+            <div class="row">
+                <p> celsius : <input type="text" [(ngModel)]="celcius" /> Fahrenheit : {{celcius | tempConverter:'F'}} </p>
+            </div>
+        </div>
+    </div>
+
+
+
+</fieldset>
+
+
+
+
+
+<fieldset>
+    <legend>Search Filter Example</legend>
+    <div class="">
+        <input type="text" class="form-control" [(ngModel)]="search" />
+
+    </div>
+
+    <div class="search-rec" *ngFor="let data of employee|searchFilter:search">
+        <p>{{data.name}} {{data.id}} {{data.email}} <a href={{data.url}}>URL</a></p>
+
+
+    </div>
+
+
+</fieldset>
+
+
+<fieldset>
+
+    <legend>Custome Filter</legend>
+    Reverse :- {{str|reverseStr}}
+    <br/> SQRT :- {{1000|mysqrt}}
+
+    <h2>Power Boost Calculator</h2>
+    <div>Normal power: <input [(ngModel)]="power"></div>
+    <div>Boost factor: <input [(ngModel)]="factor"></div>
+    <p>
+        Super Hero Power: {{power | exponentialStrength: factor}}
+    </p>
+</fieldset>
+
+
+<fieldset>
+    <legend> Currency Pipe </legend>
+    <p ngNonBindable>{{123456.34|currency:'Rs.'}}</p>
+    <p>{{123456.34|currency:'Rs.'}}</p>
+
+    <p ngNonBindable>{{123456.34|currency:'CAD':'code'}}</p>
+    <p>{{123456.34|currency:'CAD':'code'}}</p>
+
+    <p ngNonBindable>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+    <p>{{123456.34|currency:'CAD':'symbol-narrow'}}</p>
+</fieldset>
+
+
+<fieldset>
+    <legend>Date Filter</legend>
+
+    <p>Birthday on {{birthday|date:format}}</p>
+    <button (click)="toggleFormat()">Toggle Format</button>
+
+    <p ngNonBindable>{{dateVal|date:'shortTime'}}</p>
+    <p>{{dateVal|date:'shortTime'}}</p>
+
+
+    <p ngNonBindable>{{dateVal|date:'fullDate'}}</p>
+    <p>{{dateVal|date:'fullDate'}}</p>
+
+    <p ngNonBindable>{{dateVal|date:'d/M/y'}}</p>
+    <p>{{dateVal|date:'d/M/y'}}</p>
+
+
+
+</fieldset>
+
+
+<fieldset>
+    <legend>Number Filter</legend>
+    <p ngNonBindable>{{3.43434534|number:'2.1-2'}}</p>
+    <p>{{3.43434534|number:'2.1-2'}}</p>
+
+    <p ngNonBindable>{{3.43434534|number:'2.4-4'}}</p>
+    <p>{{3.43434534|number:'2.4-4'}}</p>
+</fieldset>
+
+<fieldset>
+    <legend>String pipes/filter</legend>
+    <p>{{str}}[0:4]:- >'{{str|slice:0:4}}'
+        <p>{{str}}[4:0]:- >'{{str|slice:4:0}}'
+            <p>{{str}}[4]:- >'{{str|slice:4}}'
+                <p>{{str}}[-4:-2]:- >'{{str|slice:-4:-2}}'
+                    <p>{{str}}[-100]:- >'{{str|slice:-100}}'
+                        <p>Lowercase '{{str|lowercase}}'</p>
+                        <p>Uppercase '{{str|uppercase}}'</p>
+</fieldset>
+
+
+<fieldset>
+    <legend>JSON Fiter</legend>
+    <b>Without JSON Filter {{jsonvalue}}</b><br/>
+    <b>With JSON Filter {{jsonvalue|json}}</b>
+</fieldset>
+<br/>
+<br/>
+<br/>

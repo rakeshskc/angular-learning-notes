@@ -1,0 +1,7 @@
+.parentClass {
+    border-style: 10x solid;
+    height: 500px;
+    width: 700px;
+    background-color: rgb(200, 184, 84);
+    box-shadow: 10px 10px 3px 3px grey;
+}

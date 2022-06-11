@@ -1,0 +1,42 @@
+<h1> Event Example</h1>
+
+<fieldset>
+    <legend>Click Event Example</legend>
+    {{clickMessage}}
+    <button (click)="myClick()">CLICK ME</button>
+</fieldset>
+
+<fieldset>
+    <legend>KeyUp Example</legend>
+
+    <p>{{value}}</p>
+    <input (keyup)="onKey($event)">
+
+</fieldset>
+
+<fieldset class="keyupclass">
+    <legend>Key Up Enter Event </legend>
+
+    <input #newHero (keyup.enter)="addHero(newHero.value)" (blur)="highlightMe($event)">
+
+    <button (click)="addHero(newHero.value)">Add</button>
+
+    <ul>
+        <li *ngFor="let hero of heroes">{{hero}}</li>
+    </ul>
+</fieldset>
+
+<fieldset class="mouseEnterClass">
+    <legend>Mouse Enter Event </legend>
+    <div class="d1" (mouseenter)="mouseEnterMethod()"></div>
+
+</fieldset>
+
+
+
+
+<fieldset class="scrollClass">
+    <legend>Scroll Event </legend>
+    <div class="scroll-container" (scroll)="scrollEventMethod($event)"></div>
+    <p></p>
+</fieldset>
